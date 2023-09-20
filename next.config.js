@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "swiperjs.com",
+        hostname: "cdn-op.vesti.mobi",
         port: "",
         pathname: "",
       },
@@ -12,7 +12,7 @@ const nextConfig = {
   },
 
   images: {
-    domains: ["swiperjs.com"],
+    domains: ["cdn-op.vesti.mobi"],
   },
 };
 

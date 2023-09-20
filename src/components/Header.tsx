@@ -1,7 +1,6 @@
 import {
   Text,
   Flex,
-  Input,
   IconButton,
   Popover,
   PopoverTrigger,
@@ -10,13 +9,31 @@ import {
   PopoverCloseButton,
   PopoverHeader,
   PopoverBody,
+  PopoverFooter,
+  Button,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Logo from "@/assets/6.png";
 import { BsCart } from "react-icons/bs";
+import { CurrentOrderContext } from "@/contexts/current-order";
+import { useContext } from "react";
+import ReactWhatsapp from "react-whatsapp";
 
 export function Header() {
-  const img = "https://swiperjs.com/demos/images/nature-1.jpg";
+  const { items } = useContext(CurrentOrderContext);
+
+  function convertProductsToText(products: any) {
+    let text = "";
+
+    for (const product of products) {
+      text += `* nome: ${product.product.name} - id: ${product.product.id} \n
+      `;
+    }
+
+    return text;
+  }
+
+  const message = convertProductsToText(items);
 
   return (
     <Flex
@@ -42,47 +59,51 @@ export function Header() {
         <PopoverTrigger>
           <IconButton
             aria-label="cart"
+            fontSize="20px"
             icon={<BsCart />}
             colorScheme="yellow"
           />
         </PopoverTrigger>
-        <PopoverContent bgColor="gray.900">
+        <PopoverContent h="350" bgColor="gray.900">
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverHeader>Carrinho</PopoverHeader>
-          <PopoverBody>
-            <Flex borderBottom={"1px"} py="3">
-              <Image width={50} height={40} src={img} alt="img" />
-              <Flex direction="column" alignItems="flex-start" px="4">
-                <Text>Nome do Item</Text>
-                <Text>Tamanho M</Text>
-              </Flex>
-            </Flex>
+          <PopoverBody overflowY="auto">
+            {items.map((item: any) => {
+              return (
+                <Flex key={item.product.id} borderBottom={"1px"} py="3">
+                  <Image
+                    width={50}
+                    height={40}
+                    src={item.product.media.thumb.url}
+                    alt="img"
+                  />
+                  <Flex
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    px="4"
+                  >
+                    <Text>{item.product.name}</Text>
+                    {/* <Text>Tamanho M</Text> */}
+                  </Flex>
+                </Flex>
+              );
+            })}
           </PopoverBody>
+          <PopoverFooter>
+            <Button>
+              <ReactWhatsapp
+                number="5585992004669"
+                message={message}
+                element="a"
+              >
+                Concluir
+              </ReactWhatsapp>
+            </Button>
+          </PopoverFooter>
         </PopoverContent>
       </Popover>
-
-      {/* Input de busca 
-      <Flex
-        as="label"
-        flex="1"
-        py="4"
-        px="8"
-        ml="6"
-        maxWidth={400}
-        alignSelf="center"
-        color="gray.200"
-        position="relative"
-        bg="gray.800"
-        borderRadius="full"
-      >
-        <Input 
-          color="gray.50"
-          variant="unstyled"
-          px="4"
-          mr="4"
-        />
-      </Flex> */}
     </Flex>
   );
 }

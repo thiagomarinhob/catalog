@@ -3,25 +3,27 @@ import {
   Box,
   Image,
   Heading,
-  Text,
   Button,
   ButtonGroup,
   Flex,
-  IconButton,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { AiOutlineEye } from "react-icons/ai";
-import currencyFormat from "@/utils/current-format";
+import { useContext, useState } from "react";
+// import { AiOutlineEye } from "react-icons/ai";
+// import currencyFormat from "@/utils/current-format";
 import ModalProductDetails from "@/components/modals/ModalProductDetails";
+import { CurrentOrderContext } from "@/contexts/current-order";
 
 interface ProductType {
+  id: string;
   name: string;
   image: string;
   price: string;
+  product: any;
 }
 
-export default function ProductBox({ name, image, price }: ProductType) {
+export default function ProductBox({ id, name, image, product }: ProductType) {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { addItem } = useContext(CurrentOrderContext);
 
   return (
     <Flex
@@ -30,7 +32,6 @@ export default function ProductBox({ name, image, price }: ProductType) {
       alignItems={"center"}
       justifyContent={"center"}
       w={{ base: "183px", sm: "14.5625rem", md: "17.5rem" }}
-      // bg="yellow"
     >
       <Box
         maxW={{ sm: "11.4375rem", md: "250px" }}
@@ -50,10 +51,10 @@ export default function ProductBox({ name, image, price }: ProductType) {
         direction="column"
         alignItems="flex-start"
         w="full"
-        px={{ base: "2", md: "4" }}
+        px={{ base: "1", md: "4" }}
         py="2"
       >
-        <Heading size="md" fontWeight="bold">
+        <Heading size={{ base: "sm", md: "md" }} fontWeight="bold">
           {name}
         </Heading>
         {/* <Text fontSize="sm" mb="3">
@@ -85,10 +86,13 @@ export default function ProductBox({ name, image, price }: ProductType) {
           _hover={{
             bgColor: "yellow.400",
           }}
-          w="80%"
-          ml="3"
+          // w={{ sm: "100%", md: "70%" }}
+          w="100%"
+          ml={{ sm: "3", md: "" }}
+          h="8"
           backgroundColor="yellow.300"
           fontSize={{ base: "14px" }}
+          onClick={() => addItem(product, 1)}
         >
           Adicionar ao carrinho
         </Button>
