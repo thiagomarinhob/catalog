@@ -1,4 +1,19 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "swiperjs.com",
+        port: "",
+        pathname: "",
+      },
+    ],
+  },
 
-module.exports = nextConfig
+  images: {
+    domains: ["swiperjs.com"],
+  },
+};
+
+module.exports = nextConfig;
