@@ -12,16 +12,13 @@ import { useContext, useState } from "react";
 // import currencyFormat from "@/utils/current-format";
 import ModalProductDetails from "@/components/modals/ModalProductDetails";
 import { CurrentOrderContext } from "@/contexts/current-order";
+import Link from "next/link";
 
 interface ProductType {
-  id: string;
-  name: string;
-  image: string;
-  price: string;
   product: any;
 }
 
-export default function ProductBox({ id, name, image, product }: ProductType) {
+export default function ProductBox({ product }: ProductType) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { addItem } = useContext(CurrentOrderContext);
 
@@ -38,13 +35,13 @@ export default function ProductBox({ id, name, image, product }: ProductType) {
         maxH={{ sm: "14.25rem", md: "19.5625rem" }}
       >
         <Image
-          src={image}
+          src={product.media.normal.url}
           w={{ base: "11.4375rem", sm: "11.4375rem", md: "15.625rem" }}
           h={{ base: "14.25rem", sm: "14.25rem", md: "19.5625rem" }}
           objectFit="cover"
           objectPosition="center"
           borderRadius={6}
-          alt={name}
+          alt="img"
         />
       </Box>
       <Flex
@@ -55,7 +52,7 @@ export default function ProductBox({ id, name, image, product }: ProductType) {
         py="2"
       >
         <Heading size={{ base: "sm", md: "md" }} fontWeight="bold">
-          {name}
+          {product.name}
         </Heading>
         {/* <Text fontSize="sm" mb="3">
           {currencyFormat(parseInt(price))}
@@ -81,21 +78,22 @@ export default function ProductBox({ id, name, image, product }: ProductType) {
           }}
           onClick={() => setIsOpenModal(true)}
         /> */}
-        <Button
-          variant="solid"
-          _hover={{
-            bgColor: "yellow.400",
-          }}
-          // w={{ sm: "100%", md: "70%" }}
-          w="100%"
-          ml={{ sm: "3", md: "" }}
-          h="8"
-          backgroundColor="yellow.300"
-          fontSize={{ base: "14px" }}
-          onClick={() => addItem(product, 1)}
-        >
-          Adicionar ao carrinho
-        </Button>
+        <Link href={`/products/${product.id}`}>
+          <Button
+            variant="solid"
+            _hover={{
+              bgColor: "yellow.400",
+            }}
+            // w={{ sm: "100%", md: "70%" }}
+            w="100%"
+            ml={{ sm: "3", md: "" }}
+            h="8"
+            backgroundColor="yellow.300"
+            fontSize={{ base: "14px" }}
+          >
+            Ver detalhes
+          </Button>
+        </Link>
       </ButtonGroup>
       <ModalProductDetails
         isOpen={isOpenModal}

@@ -18,6 +18,7 @@ import { BsCart } from "react-icons/bs";
 import { CurrentOrderContext } from "@/contexts/current-order";
 import { useContext } from "react";
 import ReactWhatsapp from "react-whatsapp";
+import Link from "next/link";
 
 export function Header() {
   const { items } = useContext(CurrentOrderContext);
@@ -26,7 +27,8 @@ export function Header() {
     let text = "";
 
     for (const product of products) {
-      text += `* nome: ${product.product.name} - id: ${product.product.id} \n
+      text += `Tenho interesse nessas peças.\n
+      * nome: ${product.product.name} - id: ${product.product.id} \n
       `;
     }
 
@@ -48,12 +50,14 @@ export function Header() {
       borderBottom="1px"
       justifyContent="space-between"
     >
-      <Flex alignItems="center">
-        <Image src={Logo} width={70} alt="logo" />
-        <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64">
-          Ripinna
-        </Text>
-      </Flex>
+      <Link href={"/"} dir="row">
+        <Flex alignItems="center">
+          <Image src={Logo} width={70} alt="logo" />
+          <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64">
+            Ripinna
+          </Text>
+        </Flex>
+      </Link>
 
       <Popover>
         <PopoverTrigger>
@@ -75,7 +79,7 @@ export function Header() {
                   <Image
                     width={50}
                     height={40}
-                    src={item.product.media.thumb.url}
+                    src={item.product.media[0].thumb.url}
                     alt="img"
                   />
                   <Flex

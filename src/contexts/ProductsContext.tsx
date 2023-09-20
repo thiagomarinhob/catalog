@@ -27,8 +27,6 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
 
     const data = await response.json();
 
-    console.log(prevPage, nextPage);
-
     setProducts(data.products);
     setNextPage(data.links.next ? data.links.next : "");
     setPrevPage(data.links.prev ? data.links.prev : "");

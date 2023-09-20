@@ -75,15 +75,12 @@ export default function Collection() {
         justify={{ base: "flex-start", sm: "center" }}
       >
         {data.map((item: any) => {
+          if (item.stockout) {
+            return;
+          }
           return (
             <WrapItem key={item.id}>
-              <ProductBox
-                id={item.id}
-                product={item}
-                name={item.name}
-                image={item.media.normal.url}
-                price={item.price}
-              />
+              <ProductBox product={item} />
             </WrapItem>
           );
         })}
